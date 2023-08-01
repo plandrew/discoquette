@@ -9,7 +9,7 @@ export function Searchresults(props) {
             <>
             <h2>Results</h2>
             {props.results.map((track) => (
-                  <Track trackId={track.id} name={track.name} artist={track.artist} addTrackToPlaylist={props.addTrackToPlaylist}/>
+                  <Track trackId={track.id} name={track.name} artist={track.artist} addOrRemoveFromPlaylist={props.addOrRemoveFromPlaylist}/>
             ))}
             </>
       )

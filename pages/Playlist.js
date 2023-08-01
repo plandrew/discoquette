@@ -20,7 +20,7 @@ export function Playlist(props) {
         </form>
         <div>
         {playlistTracks.map((track) => (
-                  <Track trackId={track.id} name={track.name} artist={track.artist} addTrackToPlaylist={props.addTrackToPlaylist}/>
+                  <Track trackId={track.id} name={track.name} artist={track.artist} addOrRemoveFromPlaylist={props.addOrRemoveFromPlaylist}/>
             ))}
         </div>
     </>
