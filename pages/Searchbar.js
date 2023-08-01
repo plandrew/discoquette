@@ -3,17 +3,33 @@ import { useState } from 'react';
 
 export function Searchbar(props) {
 
-    const [search, setSearch] = useState('');
+    const [artist, setArtist] = useState('');
+    const {getTracks} = props;
+
+    function handleArtistChange(event)
+    {
+        setArtist(event.target.value);
+    }
+
+    const handleClick = (event) =>
+    {
+        event.preventDefault();
+        if (artist !== undefined)
+        {
+            getTracks(artist);
+        } 
+        setArtist();
+    }
 
     return (
     <form /*onSubmit={handleSubmit}*/>
-        <label htmlFor="search">PlayList Name</label>
+        <label htmlFor="artist">Search for songs by an artist </label>
             <input 
-            id="search" 
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            id="artist" 
+            value={artist}
+            onChange={handleArtistChange}
             />
-        <button /*type="submit"*/>SEARCH</button>
+        <button type="submit" onClick={handleClick}>Search</button>
     </form>
     );
   }

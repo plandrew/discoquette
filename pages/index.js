@@ -142,7 +142,34 @@ export default function App() {
 
   //ARRAY OF TRACKS FROM POSSESSED SPOTIFY API
 
-  
+  function getTracks(artist)
+  {
+    if (typeof artist === 'string')
+    {
+      const accessToken = token;
+      const artistName = artist;
+      const encodedArtistName = encodeURIComponent(artistName);
+      const searchUrl = `https://api.spotify.com/v1/search?q=artist%3A${encodedArtistName}&type=track&market=pl&limit=10&offset=0`;
+      fetch(searchUrl, {
+        headers: {
+          'Authorization': 'Bearer ' + accessToken
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('HTTP error ' + response.status);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(`Tracks by ${artistName}:`, data.tracks.items);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+    
+  }
 
 
   const [tracks, setTracks] = useState([
@@ -195,11 +222,11 @@ export default function App() {
       <button onClick={getRefreshedToken}>REFRESH TOKEN</button>
       <header>
         <h1>Discoquette</h1>
-        <Searchbar />
+        <Searchbar getTracks={getTracks}/>
       </header>
       <div className="App-playlist">
-        <Searchresults tracks={tracks} onAdd={addOrRemoveFromPlaylist} results={tracks}/>
-        <Playlist playlistTracks={playlistTracks} onRemove={addOrRemoveFromPlaylist} />
+        <Searchresults tracks={tracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} results={tracks}/>
+        <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} />
       </div>
     </div>
   );

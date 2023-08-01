@@ -2,8 +2,11 @@ import styles from '../styles/Track.module.css';
 
 function Track(props) {
 
+  const {addOrRemoveFromPlaylist} = props;
+  const {trackId} = props;
+
   const handleAddClick = () => {
-    props.addOrRemoveFromPlaylist(props.trackId);
+    addOrRemoveFromPlaylist(trackId);
   };
 
 
