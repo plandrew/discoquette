@@ -3,9 +3,6 @@ import React, { useRef } from 'react';
 import Playlist from './Playlist.js'
 import Searchbar from './Searchbar.js'
 import {Searchresults} from './Searchresults.js'
-import Track from './Track.js'
-import Tracklist from './Tracklist.js'
-import Utilities, {generateId} from './Utilities.js'
 
 export default function App() {
 
@@ -50,7 +47,7 @@ export default function App() {
     generateCodeChallenge(codeVerifier)
       .then(codeChallenge => {
         let state = generateRandomString(16);
-        let scope = 'user-read-private user-read-email';
+        let scope = 'user-library-read user-library-modify user-top-read user-read-private user-read-email playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
 
         localStorage.setItem('code_verifier', codeVerifier);
 
@@ -63,8 +60,9 @@ export default function App() {
           code_challenge_method: 'S256',
           code_challenge: codeChallenge
         });
+        
 
-        window.location = 'https://accounts.spotify.com/authorize?' + args;
+        window.location = `https://accounts.spotify.com/authorize?` + args;
       })
   }
 
@@ -140,19 +138,17 @@ export default function App() {
     }
   }
 
-  //ARRAY OF TRACKS FROM POSSESSED SPOTIFY API
+  //ARRAY OF TRACKS FROM POSSESSED FROM SPOTIFY
 
   function getTracks(artist)
   {
     if (typeof artist === 'string')
     {
-      const accessToken = token;
-      const artistName = artist;
-      const encodedArtistName = encodeURIComponent(artistName);
+      const encodedArtistName = encodeURIComponent(artist);
       const searchUrl = `https://api.spotify.com/v1/search?q=artist%3A${encodedArtistName}&type=track&market=pl&limit=10&offset=0`;
       fetch(searchUrl, {
         headers: {
-          'Authorization': 'Bearer ' + accessToken
+          'Authorization': 'Bearer ' + token
         }
       })
         .then(response => {
@@ -162,36 +158,64 @@ export default function App() {
           return response.json();
         })
         .then(data => {
-          console.log(`Tracks by ${artistName}:`, data.tracks.items);
+          setTracks(data.tracks.items)
+          console.log(data.tracks.items)
         })
         .catch(error => {
           console.error('Error:', error);
         });
     }
-    
+    console.log(token);
   }
 
-
-  const [tracks, setTracks] = useState([
-    {
-      name: 'Alright',
-      artist: 'Jamiroquai',
-      album: 'My favorite types of cats are slightly weird looking ones!',
-      id: generateId()
-    },
-    {
-      name: '7days',
-      artist: 'Jamiroquai',
-      album: 'I don\'t like cats at all.',
-      id: generateId()
-    },
-    {
-      name: 'LittleL',
-      artist: 'Jamiroquai',
-      album: 'Wild ostriches make the best pets.',
-      id: generateId()
+  async function createPlaylist(playlistName) {
+    const url = `https://api.spotify.com/v1/users/31mouwpyor2lmfifwz2jqnpdlaaq/playlists`;
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: playlistName,
+        public: false
+      })
+    });
+  
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`Failed to create playlist: ${errorMessage}`);
     }
-  ]);
+    const playlistData = await response.json();
+    const uris = Array.from(playlistTracks, (track) => `spotify:track:${track.id}`)
+    console.log(uris);
+
+    fetch(`https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({
+        uris: uris,
+      })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('HTTP error ' + response.status);
+        }
+        console.log(response.json());
+        return response.json();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    
+
+  }
+
+  const [tracks, setTracks] = useState([]);
+  const [playlistId, setPlaylistId] = useState('');
 
   //PLAYLIST ARRAY OF OBJECTS
 
@@ -225,8 +249,8 @@ export default function App() {
         <Searchbar getTracks={getTracks}/>
       </header>
       <div className="App-playlist">
-        <Searchresults tracks={tracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} results={tracks}/>
-        <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} />
+        <Searchresults addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} tracks={tracks}/>
+        <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} createPlaylist={createPlaylist} />
       </div>
     </div>
   );

@@ -6,6 +6,13 @@ export function Playlist(props) {
 
     const [playlistName, setPlaylistName] = useState('');
     const {playlistTracks} = props;
+    const {createPlaylist} = props;
+
+    const handleClick = (event) =>
+    {
+        event.preventDefault();
+        createPlaylist(playlistName);
+    }
 
     return (
     <>
@@ -16,11 +23,11 @@ export function Playlist(props) {
                 value={playlistName}
                 onChange={(e) => setPlaylistName(e.target.value)}
                 />
-            <button /*type="submit"*/>SAVE TO SPOTIFT</button>
+            <button onClick={handleClick}>SAVE TO SPOTIFT</button>
         </form>
         <div>
         {playlistTracks.map((track) => (
-                  <Track trackId={track.id} name={track.name} artist={track.artist} addOrRemoveFromPlaylist={props.addOrRemoveFromPlaylist}/>
+                  <Track track={track} addOrRemoveFromPlaylist={props.addOrRemoveFromPlaylist}/>
             ))}
         </div>
     </>
