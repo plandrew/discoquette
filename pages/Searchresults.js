@@ -10,11 +10,11 @@ export function Searchresults(props) {
       return (
             <div>
             <h2>Results</h2>
-            <div className={styles.searchresults}>
+            <datalist className={styles.searchresults} aria-role="">
                   {tracks.map((track) => (
                         <Track track={track} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist}/>
                   ))}
-            </div>
+            </datalist>
             </div>
       )
       }

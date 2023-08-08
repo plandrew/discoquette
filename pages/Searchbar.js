@@ -24,6 +24,8 @@ export function Searchbar(props) {
     return (
     <form className={styles.searchbar}/*onSubmit={handleSubmit}*/>
             <input 
+            type="text"
+            role="searchbox"
             id="artist" 
             value={artist}
             onChange={handleArtistChange}
