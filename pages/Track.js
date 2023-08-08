@@ -11,10 +11,11 @@ function Track(props) {
 
 
   return (
-  <li>
-      <p>{track.name}</p>
-      <p>{track.artists[0].name}</p>
-      <p>{track.album.name}</p>
+  <li className={styles.li}>
+    <div>
+      <h4 className={styles.h4}>{track.name.split(' (')[0]}</h4>
+      <p className={styles.p}>{track.album.name.split(' (')[0]}</p>
+    </div>
       <button onClick={handleAddClick}>+|-</button>
   </li>
   );

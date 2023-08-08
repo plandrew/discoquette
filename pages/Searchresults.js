@@ -1,6 +1,6 @@
-import styles from '../styles/SearchResults.module.css';
 import Track from './Track.js';
-//This component should return Search Results Array with name, artist, album, id proporites
+import styles from '../styles/Searchresults.module.css';
+
 
 export function Searchresults(props) {
 
@@ -8,12 +8,14 @@ export function Searchresults(props) {
       const {addOrRemoveFromPlaylist} = props;
 
       return (
-            <>
+            <div>
             <h2>Results</h2>
-            {tracks.map((track) => (
-                  <Track track={track} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist}/>
-            ))}
-            </>
+            <div className={styles.searchresults}>
+                  {tracks.map((track) => (
+                        <Track track={track} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist}/>
+                  ))}
+            </div>
+            </div>
       )
       }
 

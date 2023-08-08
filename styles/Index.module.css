@@ -1,0 +1,18 @@
+.searchbar{
+    grid-area: searchbar;
+}
+
+.content{
+    grid-area: content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1vw;
+}
+
+.main {
+    display: grid;
+    grid-template-areas: "searchbar" "content";
+    grid-template-rows: auto 1fr;
+    height: 50vh;
+    color: white;
+}

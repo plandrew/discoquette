@@ -1,17 +1,25 @@
 import { useState, useEffect } from 'react';
-import React, { useRef } from 'react';
 import Playlist from './Playlist.js'
 import Searchbar from './Searchbar.js'
 import {Searchresults} from './Searchresults.js'
+import styles from '../styles/Index.module.css';
 
 export default function App() {
 
+  //STATES
+
   const [token, setToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
+  const [tracks, setTracks] = useState([]);
+  const [playlistId, setPlaylistId] = useState('');
+  const [playlistTracks, setPlaylistTracks] = useState([]);
 
-  //AUTHORIZATION
+  //AUTHORIZATION DATA
 
-  //CODE VERIFIER
+  const clientId = '0a7f801c76fe4efdacea3c10662f2b9a';
+  const redirectUri = 'http://localhost:3000';
+
+  //AUTHORIZATION UTILITIES
 
   function generateRandomString(length) {
     let text = '';
@@ -38,17 +46,17 @@ export default function App() {
     return base64encode(digest);
   }
 
-  const clientId = '0a7f801c76fe4efdacea3c10662f2b9a';
-  const redirectUri = 'http://localhost:3000';
-
   let codeVerifier = generateRandomString(128);
+
+  //AUTHORIZATION BY THE CUSTOMER WITH PKCE FLOW
 
   function login() {
     generateCodeChallenge(codeVerifier)
       .then(codeChallenge => {
         let state = generateRandomString(16);
-        let scope = 'user-library-read user-library-modify user-top-read user-read-private user-read-email playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
 
+        //scope of authority
+        let scope = 'user-library-read user-library-modify user-top-read user-read-private user-read-email playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
         localStorage.setItem('code_verifier', codeVerifier);
 
         let args = new URLSearchParams({
@@ -61,10 +69,12 @@ export default function App() {
           code_challenge: codeChallenge
         });
         
-
+        //directing the customer to the spotify authorization website
         window.location = `https://accounts.spotify.com/authorize?` + args;
       })
   }
+
+  //OBTAINING A TOKEN
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -95,7 +105,6 @@ export default function App() {
       .then(data => {
         setToken(data.access_token);
         setRefreshToken(data.refresh_token);
-        console.log(data);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -105,6 +114,8 @@ export default function App() {
       history.replaceState(null, null, baseUrl);
     }
   }, []);
+
+  //OBTAINING A REFRESHED TOKEN
 
   function getRefreshedToken()
   {
@@ -129,8 +140,7 @@ export default function App() {
         return response.json();
       })
       .then(data => {
-        setToken(data.access_token); 
-        console.log(data);
+        setToken(data.access_token);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -138,7 +148,8 @@ export default function App() {
     }
   }
 
-  //ARRAY OF TRACKS FROM POSSESSED FROM SPOTIFY
+  //GET TRACKS FROM THE SERVER
+  //Input = artist | Output = track array
 
   function getTracks(artist)
   {
@@ -159,14 +170,15 @@ export default function App() {
         })
         .then(data => {
           setTracks(data.tracks.items)
-          console.log(data.tracks.items)
         })
         .catch(error => {
           console.error('Error:', error);
         });
     }
-    console.log(token);
   }
+
+  //CREATE PLAYLIST
+  //Input = playlist name, Output = new playlist with tracks added to the playlist
 
   async function createPlaylist(playlistName) {
     const url = `https://api.spotify.com/v1/users/31mouwpyor2lmfifwz2jqnpdlaaq/playlists`;
@@ -189,7 +201,6 @@ export default function App() {
     }
     const playlistData = await response.json();
     const uris = Array.from(playlistTracks, (track) => `spotify:track:${track.id}`)
-    console.log(uris);
 
     fetch(`https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`, {
       method: 'POST',
@@ -204,23 +215,14 @@ export default function App() {
         if (!response.ok) {
           throw new Error('HTTP error ' + response.status);
         }
-        console.log(response.json());
         return response.json();
       })
       .catch(error => {
         console.error('Error:', error);
       });
-    
-
   }
 
-  const [tracks, setTracks] = useState([]);
-  const [playlistId, setPlaylistId] = useState('');
-
   //PLAYLIST ARRAY OF OBJECTS
-
-  const [playlistTracks, setPlaylistTracks] = useState([]);
- 
 
   const addOrRemoveFromPlaylist = (trackId) => {
     const trackToAdd = tracks.find(track => track.id === trackId);
@@ -236,22 +238,24 @@ export default function App() {
     }
   };
 
-
-
   //APPLICATION BODY
 
   return (
     <div>
-      <button onClick={login}>LOGIN</button>
-      <button onClick={getRefreshedToken}>REFRESH TOKEN</button>
       <header>
         <h1>Discoquette</h1>
-        <Searchbar getTracks={getTracks}/>
+        <button onClick={login}>Login</button>
+        <button onClick={getRefreshedToken}>Refresh Token</button>
       </header>
-      <div className="App-playlist">
-        <Searchresults addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} tracks={tracks}/>
-        <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} createPlaylist={createPlaylist} />
-      </div>
+      <main className={styles.main}>
+        <section className={styles.searchbar}>
+          <Searchbar getTracks={getTracks}/>
+        </section>
+        <section className={styles.content}>
+          <Searchresults addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} tracks={tracks} />
+          <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} createPlaylist={createPlaylist} />
+        </section>
+      </main> 
     </div>
   );
 }

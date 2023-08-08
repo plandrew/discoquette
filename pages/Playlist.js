@@ -1,6 +1,7 @@
 import styles from '../styles/Playlist.module.css';
 import { useState } from 'react';
 import Track from './Track.js'
+import '../styles/Playlist.module.css';
 
 export function Playlist(props) {
 
@@ -15,22 +16,25 @@ export function Playlist(props) {
     }
 
     return (
-    <>
+   <div className={styles.playlist}>
+        <h2>Playlist</h2>
         <form /*onSubmit={handleSubmit}*/>
-            <label htmlFor="playlistName">PlayList Name</label>
+            <label htmlFor="playlistName" />
                 <input 
                 id="playlistName" 
                 value={playlistName}
                 onChange={(e) => setPlaylistName(e.target.value)}
+                placeholder="PlayList Name"
                 />
-            <button onClick={handleClick}>SAVE TO SPOTIFT</button>
+            
         </form>
         <div>
-        {playlistTracks.map((track) => (
-                  <Track track={track} addOrRemoveFromPlaylist={props.addOrRemoveFromPlaylist}/>
-            ))}
+            {playlistTracks.map((track) => (
+                    <Track track={track} addOrRemoveFromPlaylist={props.addOrRemoveFromPlaylist}/>
+                ))}
+            <button onClick={handleClick}>SAVE TO SPOTIFT</button>
         </div>
-    </>
+    </div>
     );
   }
   export default Playlist;

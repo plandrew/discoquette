@@ -1,5 +1,5 @@
-import styles from '../styles/SearchBar.module.css';
 import { useState } from 'react';
+import styles from '../styles/Searchbar.module.css';
 
 export function Searchbar(props) {
 
@@ -22,12 +22,13 @@ export function Searchbar(props) {
     }
 
     return (
-    <form /*onSubmit={handleSubmit}*/>
-        <label htmlFor="artist">Search for songs by an artist </label>
+    <form className={styles.searchbar}/*onSubmit={handleSubmit}*/>
             <input 
             id="artist" 
             value={artist}
             onChange={handleArtistChange}
+            placeholder="Search by an artist"
+            className={styles.search}
             />
         <button type="submit" onClick={handleClick}>Search</button>
     </form>

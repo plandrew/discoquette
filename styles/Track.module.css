@@ -1,0 +1,19 @@
+.p {
+    padding: 0px;
+    margin: 0px;
+    color: rgb(188, 188, 188);
+    font-size: 0.7em;
+}
+
+.li {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid white;
+}
+
+.h4{
+    padding: 0px;
+    margin: 0px;
+    color: white;
+    font-size: 0.8em;
+}
