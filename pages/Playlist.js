@@ -28,12 +28,12 @@ export function Playlist(props) {
                 />
             
         </form>
-        <datalist>
+        <datalist className={styles.tracks}>
             {playlistTracks.map((track) => (
                     <Track track={track} addOrRemoveFromPlaylist={props.addOrRemoveFromPlaylist}/>
                 ))}
-            <button onClick={handleClick}>SAVE TO SPOTIFT</button>
         </datalist>
+        <button onClick={handleClick}>SAVE TO SPOTIFT</button>
     </div>
     );
   }

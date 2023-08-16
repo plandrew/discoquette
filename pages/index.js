@@ -244,8 +244,8 @@ export default function App() {
     <div>
       <header>
         <h1>Discoquette</h1>
-        <button onClick={login}>Login</button>
-        <button onClick={getRefreshedToken}>Refresh Token</button>
+        <button aria-label="Login" onClick={login}>Login</button>
+        <button aria-label="Refresh Token" onClick={getRefreshedToken}>Refresh Token</button>
       </header>
       <main className={styles.main}>
         <section className={styles.searchbar}>
