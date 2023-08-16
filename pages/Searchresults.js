@@ -7,6 +7,11 @@ export function Searchresults(props) {
       const {tracks} = props;
       const {addOrRemoveFromPlaylist} = props;
 
+      if (!tracks) {
+            // Render a loading spinner or a message here
+            return <div>Loading...</div>;
+          }
+
       return (
             <div>
             <h2>Results</h2>

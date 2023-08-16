@@ -1,6 +1,12 @@
 {
   "/_app": "pages/_app.js",
+  "/Playlist": "pages/Playlist.html",
+  "/Searchbar": "pages/Searchbar.html",
+  "/Searchresults": "pages/Searchresults.html",
+  "/Track": "pages/Track.html",
+  "/api/hello": "pages/api/hello.js",
+  "/": "pages/index.html",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/404": "pages/404.html"
 }

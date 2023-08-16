@@ -9,6 +9,11 @@ function Track(props) {
     addOrRemoveFromPlaylist(track.id);
   };
 
+  if (!track) {
+    // Render a loading spinner or a message here
+    return <div>Loading...</div>;
+  }
+
 
   return (
   <li className={styles.li}>

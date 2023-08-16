@@ -15,6 +15,11 @@ export function Playlist(props) {
         createPlaylist(playlistName);
     }
 
+    if (!playlistTracks) {
+        // Render a loading spinner or a message here
+        return <div>Loading...</div>;
+      }
+
     return (
    <div className={styles.playlist}>
         <h2>Playlist</h2>
