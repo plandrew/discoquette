@@ -16,7 +16,7 @@ export default function App() {
 
   //AUTHORIZATION DATA
   const [clientId, setClientId] = useState('0a7f801c76fe4efdacea3c10662f2b9a')
-  const redirectUri = 'http://localhost:3000';
+  const redirectUri = 'https://main--cerulean-squirrel-1d96ca.netlify.app';
 
   function handleClientIdChange(event)
     {
