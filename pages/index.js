@@ -15,9 +15,15 @@ export default function App() {
   const [playlistTracks, setPlaylistTracks] = useState([]);
 
   //AUTHORIZATION DATA
-
-  const clientId = '0a7f801c76fe4efdacea3c10662f2b9a';
+  const [clientId, setClientId] = useState('0a7f801c76fe4efdacea3c10662f2b9a')
   const redirectUri = 'http://localhost:3000';
+
+  function handleClientIdChange(event)
+    {
+        setClientId(event.target.value);
+    }
+
+
 
   //AUTHORIZATION UTILITIES
 
@@ -244,6 +250,14 @@ export default function App() {
     <div>
       <header>
         <h1>Discoquette</h1>
+              <input 
+              type="text"
+              role="textbox"
+              id="clientId" 
+              onChange={handleClientIdChange}
+              placeholder="Enter your clientId"
+              />
+
         <button aria-label="Login" onClick={login}>Login</button>
         <button aria-label="Refresh Token" onClick={getRefreshedToken}>Refresh Token</button>
       </header>
