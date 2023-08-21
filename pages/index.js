@@ -273,7 +273,7 @@ export default function App() {
         </section>
         <section className={styles.content}>
           <Searchresults addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} tracks={tracks} handlePlay={handlePlay}/>
-          <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} createPlaylist={createPlaylist} handlePlay={handlePlay}/>
+          <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} createPlaylist={createPlaylist} handlePlay={handlePlay} activePlayer={activePlayer}/>
         </section>
       </main> 
     </div>
