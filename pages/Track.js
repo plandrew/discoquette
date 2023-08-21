@@ -20,7 +20,7 @@ function Track(props) {
     <div>
       <h4 className={styles.h4} aria-label="Track Name">{track.name.split(' (')[0]}</h4>
       <p className={styles.p} aria-label="Album Name">{track.album.name.split(' (')[0]}</p>
-      <audio src={track.previewUrl} controls></audio>
+      <audio src={track.preview_url} controls></audio>
     </div>
       <button onClick={handleAddClick}>+|-</button>
   </li>
