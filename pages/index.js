@@ -244,6 +244,12 @@ export default function App() {
     }
   };
 
+  const [activePlayer, setActivePlayer] = useState(null);
+
+  const handlePlay = (isPlaying) => {
+    setActivePlayer(isPlaying ? activePlayer : null);
+  }
+
   //APPLICATION BODY
 
   return (
@@ -266,8 +272,8 @@ export default function App() {
           <Searchbar getTracks={getTracks}/>
         </section>
         <section className={styles.content}>
-          <Searchresults addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} tracks={tracks} />
-          <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} createPlaylist={createPlaylist} />
+          <Searchresults addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} tracks={tracks} handlePlay={handlePlay}/>
+          <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} createPlaylist={createPlaylist} handlePlay={handlePlay}/>
         </section>
       </main> 
     </div>

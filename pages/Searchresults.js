@@ -17,7 +17,7 @@ export function Searchresults(props) {
             <h2>Results</h2>
             <datalist className={styles.searchresults} aria-role="">
                   {tracks.map((track) => (
-                        <Track track={track} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist}/>
+                        <Track track={track} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} handlePlay={props.handlePlay}/>
                   ))}
             </datalist>
             </div>
