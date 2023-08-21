@@ -1,3 +1,4 @@
+import { useState } from 'react';
 const Miniplayer = ({ previewUrl, onPlay }) => {
     const [isPlaying, setIsPlaying] = useState(false);
   
@@ -13,6 +14,5 @@ const Miniplayer = ({ previewUrl, onPlay }) => {
         </div>
       );
 };
-
 
 export default Miniplayer
