@@ -14,6 +14,10 @@ export function Playlist(props) {
         event.preventDefault();
         createPlaylist(playlistName);
     }
+    const [activeTrack, setActiveTrack] = useState(null);
+    const handlePlay = (trackId) => {
+          setActiveTrack(trackId);
+    };  
 
     if (!playlistTracks) {
         // Render a loading spinner or a message here
@@ -35,7 +39,7 @@ export function Playlist(props) {
         </form>
         <datalist className={styles.tracks}>
             {playlistTracks.map((track) => (
-                    <Track track={track} addOrRemoveFromPlaylist={props.addOrRemoveFromPlaylist} handlePlay={props.handlePlay} activePlayer={props.activePlayer}/>
+                    <Track track={track} addOrRemoveFromPlaylist={props.addOrRemoveFromPlaylist} isActive={track.id === activeTrack} onPlay={handlePlay}/>
                 ))}
         </datalist>
         <button onClick={handleClick}>SAVE TO SPOTIFT</button>

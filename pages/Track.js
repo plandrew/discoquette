@@ -5,9 +5,15 @@ function Track(props) {
 
   const {addOrRemoveFromPlaylist} = props;
   const {track} = props;
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const handleAddClick = () => {
     addOrRemoveFromPlaylist(track.id);
+  };
+
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
+    onPlay(!isPlaying ? track.id : null);
   };
 
   if (!track) {
@@ -23,6 +29,8 @@ function Track(props) {
       <p className={styles.p} aria-label="Album Name">{track.album.name.split(' (')[0]}</p>
     </div>
       <button onClick={handleAddClick}>+|-</button>
+      <audio src={track.previewUrl} controls={isPlaying} />
+      <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
   </li>
   );
 }
