@@ -38,7 +38,7 @@ function Track(props) {
       <p className={styles.p} aria-label="Album Name">{track.album.name.split(' (')[0]}</p>
     </div>
       <button onClick={handleAddClick}>+|-</button>
-      <audio ref={audioRef} src={track.previewUrl} />
+      <audio ref={audioRef} src={track.preview_url} />
       <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
   </li>
   );
