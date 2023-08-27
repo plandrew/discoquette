@@ -7,6 +7,7 @@ function Track(props) {
   const {track} = props;
   const [isPlaying, setIsPlaying] = useState(false);
   const {onPlay} = props;
+  const audioRef = useRef(null);
 
   const handleAddClick = () => {
     addOrRemoveFromPlaylist(track.id);
