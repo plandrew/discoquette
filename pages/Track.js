@@ -1,5 +1,5 @@
 import styles from '../styles/Track.module.css';
-import Miniplayer from './Miniplayer';
+
 
 function Track(props) {
 
