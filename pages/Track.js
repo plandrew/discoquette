@@ -22,6 +22,13 @@ function Track(props) {
     return <div>Loading...</div>;
   }
 
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
 
   return (
   <li className={styles.li}>
@@ -30,7 +37,7 @@ function Track(props) {
       <p className={styles.p} aria-label="Album Name">{track.album.name.split(' (')[0]}</p>
     </div>
       <button onClick={handleAddClick}>+|-</button>
-      <audio src={track.previewUrl} controls={isPlaying} />
+      <audio ref={audioRef} src={track.previewUrl} />
       <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
   </li>
   );
