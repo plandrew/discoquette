@@ -5,7 +5,6 @@ function Track(props) {
 
   const {addOrRemoveFromPlaylist} = props;
   const {track} = props;
-  const [isPlaying, setIsPlaying] = useState(false);
   const {onPlay} = props;
   const audioRef = useRef(null);
   const {isActive} = props;
@@ -15,8 +14,7 @@ function Track(props) {
   };
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-    onPlay(!isPlaying ? track.id : null);
+    onPlay(isActive ? track.id : null);
   };
 
   if (!track) {
@@ -25,12 +23,12 @@ function Track(props) {
   }
 
   useEffect(() => {
-    if (isPlaying) {
+    if (isActive) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
-  }, [isPlaying]);
+  }, [isActive]);
 
   return (
   <li className={styles.li}>
