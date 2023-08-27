@@ -1,13 +1,12 @@
 import Track from './Track.js';
 import styles from '../styles/Searchresults.module.css';
 import { useState } from 'react';
-
+const {activeTrack, setActiveTrack} = props;
 
 export function Searchresults(props) {
 
       const {tracks} = props;
       const {addOrRemoveFromPlaylist} = props;
-      
       const handlePlay = (trackId) => {
             setActiveTrack(trackId);
       };  
