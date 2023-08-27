@@ -1,5 +1,5 @@
 import styles from '../styles/Track.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function Track(props) {
 
