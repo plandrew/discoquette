@@ -13,6 +13,7 @@ export default function App() {
   const [tracks, setTracks] = useState([]);
   const [playlistId, setPlaylistId] = useState('');
   const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [activeTrack, setActiveTrack] = useState(null);
 
   //AUTHORIZATION DATA
   const [clientId, setClientId] = useState('0a7f801c76fe4efdacea3c10662f2b9a')
@@ -246,10 +247,6 @@ export default function App() {
 
   const [activePlayer, setActivePlayer] = useState(null);
 
-  const handlePlay = (isPlaying) => {
-    setActivePlayer(isPlaying ? activePlayer : null);
-  }
-
   //APPLICATION BODY
 
   return (
@@ -272,8 +269,8 @@ export default function App() {
           <Searchbar getTracks={getTracks}/>
         </section>
         <section className={styles.content}>
-          <Searchresults addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} tracks={tracks} handlePlay={handlePlay}/>
-          <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} createPlaylist={createPlaylist} handlePlay={handlePlay} activePlayer={activePlayer}/>
+          <Searchresults addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} tracks={tracks} setActiveTrack={setActiveTrack} activeTrack={activeTrack} />
+          <Playlist playlistTracks={playlistTracks} addOrRemoveFromPlaylist={addOrRemoveFromPlaylist} createPlaylist={createPlaylist} activePlayer={activePlayer} setActiveTrack={setActiveTrack} activeTrack={activeTrack} />
         </section>
       </main> 
     </div>

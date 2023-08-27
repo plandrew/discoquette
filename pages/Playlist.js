@@ -8,13 +8,14 @@ export function Playlist(props) {
     const [playlistName, setPlaylistName] = useState('');
     const {playlistTracks} = props;
     const {createPlaylist} = props;
+    const {activeTrack, setActiveTrack} = props;
 
     const handleClick = (event) =>
     {
         event.preventDefault();
         createPlaylist(playlistName);
     }
-    const [activeTrack, setActiveTrack] = useState(null);
+
     const handlePlay = (trackId) => {
           setActiveTrack(trackId);
     };  

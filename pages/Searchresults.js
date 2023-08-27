@@ -7,7 +7,7 @@ export function Searchresults(props) {
 
       const {tracks} = props;
       const {addOrRemoveFromPlaylist} = props;
-      const [activeTrack, setActiveTrack] = useState(null);
+      
       const handlePlay = (trackId) => {
             setActiveTrack(trackId);
       };  
