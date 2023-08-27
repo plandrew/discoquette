@@ -14,7 +14,7 @@ function Track(props) {
   };
 
   const togglePlay = () => {
-    onPlay(isActive ? track.id : null);
+    onPlay(isActive ? null : track.id);
   };
 
   if (!track) {
