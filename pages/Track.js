@@ -8,6 +8,7 @@ function Track(props) {
   const [isPlaying, setIsPlaying] = useState(false);
   const {onPlay} = props;
   const audioRef = useRef(null);
+  const {isActive} = props;
 
   const handleAddClick = () => {
     addOrRemoveFromPlaylist(track.id);
@@ -39,7 +40,7 @@ function Track(props) {
     </div>
       <button onClick={handleAddClick}>+|-</button>
       <audio ref={audioRef} src={track.preview_url} />
-      <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
+      <button onClick={togglePlay}>{isActive ? 'Pause' : 'Play'}</button>
   </li>
   );
 }
